@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
-import { Mail, Check, Loader2, AlertCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { Mail, Check, Loader2, AlertCircle } from "lucide-react";
 
 const EmailSignup = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
 
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('http://localhost:5000/api/send-welcome-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, name: '' }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/send-welcome-email`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, name: "" }),
+        }
+      );
 
       const data = await response.json();
 
       if (data.success) {
         setIsSubmitted(true);
-        console.log('Welcome email sent successfully to:', email);
+        console.log("Welcome email sent successfully to:", email);
       } else {
-        setError(data.error || 'Failed to send welcome email. Please try again.');
+        setError(
+          data.error || "Failed to send welcome email. Please try again."
+        );
       }
     } catch (err) {
-      console.error('Error sending email:', err);
-      setError('Network error. Please check your connection and try again.');
+      console.error("Error sending email:", err);
+      setError("Network error. Please check your connection and try again.");
     } finally {
       setIsLoading(false);
     }
@@ -41,7 +46,9 @@ const EmailSignup = () => {
     return (
       <div className="flex items-center justify-center gap-3 text-amber-900 bg-white/20 backdrop-blur-sm rounded-full px-6 py-3 border border-white/30">
         <Check className="w-5 h-5" />
-        <span className="font-medium">Thank you! We'll notify you when we launch.</span>
+        <span className="font-medium">
+          Thank you! We'll notify you when we launch.
+        </span>
       </div>
     );
   }
@@ -54,7 +61,7 @@ const EmailSignup = () => {
           <span className="font-medium text-sm">{error}</span>
         </div>
         <button
-          onClick={() => setError('')}
+          onClick={() => setError("")}
           className="w-full px-6 py-3 bg-amber-800 hover:bg-amber-900 text-white rounded-full font-medium transition-colors duration-200 shadow-lg hover:shadow-xl"
         >
           Try Again
@@ -64,7 +71,10 @@ const EmailSignup = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+    >
       <div className="relative flex-1">
         <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-900 w-5 h-5 z-10" />
         <input
@@ -88,7 +98,7 @@ const EmailSignup = () => {
             <span>Sending...</span>
           </>
         ) : (
-          'Notify Me'
+          "Notify Me"
         )}
       </button>
     </form>
