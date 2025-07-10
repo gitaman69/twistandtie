@@ -18,6 +18,7 @@ const EmailSignup = () => {
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/send-welcome-email`,
         {
+          credentials: "include",
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, name: "" }),

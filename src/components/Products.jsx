@@ -7,10 +7,6 @@ function Products() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/api/products`, {
     credentials: "include",
-    cache: "no-store", // <-- force refetching
-    headers: {
-      "Cache-Control": "no-cache", // <-- force no cache
-    },
   })
       .then((res) => res.json())
       .then(setProducts)
