@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = ({ user }) => {
   const location = useLocation();
 
   const handleLogout = () => {
-    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/logout`;
+    localStorage.removeItem("token");
+    window.location.href = "/";
   };
 
   return (

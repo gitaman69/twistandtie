@@ -5,13 +5,19 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/products`, {
-    credentials: "include",
+  const token = localStorage.getItem("token");
+
+  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/products`, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
   })
-      .then((res) => res.json())
-      .then(setProducts)
-      .catch(console.error);
-  }, []);
+    .then((res) => res.json())
+    .then(setProducts)
+    .catch(console.error);
+}, []);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 py-24 px-4">

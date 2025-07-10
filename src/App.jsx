@@ -17,22 +17,38 @@ function App() {
   const [loading, setLoading] = useState(true); // <-- loading state
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("🔐 Retrieved token from localStorage:", token);
+
+    if (!token) {
+      console.warn("⚠️ No token found in localStorage.");
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/user`, {
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.emails) {
-          setUser(data);
-        } else {
-          setUser(null);
+      .then(async (res) => {
+        if (!res.ok) {
+          const error = await res.json();
+          console.error("❌ Auth error:", error);
+          throw new Error(error.message);
         }
-        setLoading(false); // <-- end loading
+        return res.json();
       })
-      .catch(() => {
+      .then((data) => {
+        console.log("✅ Authenticated user data:", data);
+        setUser(data);
+      })
+      .catch((err) => {
+        console.error("🚫 Fetch user failed:", err.message);
         setUser(null);
-        setLoading(false); // <-- end loading
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   // Show nothing until user fetch is complete

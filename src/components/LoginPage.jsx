@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Clock, Sparkles, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    console.log("Token from URL:", token);
+
+    if (token) {
+      localStorage.setItem("token", token);
+      console.log("Token saved to localStorage");
+
+      // Clean the URL by removing token param and redirect to /products
+      window.history.replaceState({}, document.title, "/products");
+      navigate("/products", { replace: true });
+    } else {
+      console.log("No token found in URL.");
+    }
+  }, [navigate]);
+
   const handleGoogleLogin = () => {
     window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
   };
-
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden pt-16">
@@ -54,7 +70,10 @@ const LoginPage = () => {
               onClick={handleGoogleLogin}
               className="bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-700 hover:to-orange-600 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-all duration-300 flex items-center justify-center gap-3"
             >
-              <img src="https://img.icons8.com/color/16/google-logo.png" alt="Google" />
+              <img
+                src="https://img.icons8.com/color/16/google-logo.png"
+                alt="Google"
+              />
               Sign in with Google
             </button>
           </div>
