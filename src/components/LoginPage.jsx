@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     console.log("Token from URL:", token);
@@ -20,7 +19,6 @@ const LoginPage = () => {
     } else {
       console.log("No token found in URL.");
     }
-  }, [navigate]);
 
   const handleGoogleLogin = () => {
     window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;

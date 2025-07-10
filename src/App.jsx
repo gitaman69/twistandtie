@@ -14,9 +14,20 @@ import {
 
 function App() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // <-- loading state
+  const [loading, setLoading] = useState(true); // loading UI
 
   useEffect(() => {
+    // First, check if token exists in URL (Google login redirect)
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromURL = urlParams.get("token");
+
+    if (tokenFromURL) {
+      console.log("🔐 Found token in URL:", tokenFromURL);
+      localStorage.setItem("token", tokenFromURL);
+      // Remove token from URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
     const token = localStorage.getItem("token");
     console.log("🔐 Retrieved token from localStorage:", token);
 
@@ -28,27 +39,24 @@ function App() {
     }
 
     fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     })
-      .then(async (res) => {
-        if (!res.ok) {
-          const error = await res.json();
-          console.error("❌ Auth error:", error);
-          throw new Error(error.message);
-        }
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
-        console.log("✅ Authenticated user data:", data);
-        setUser(data);
+        if (data?.email || data?.emails) {
+          console.log("✅ Authenticated user data:", data);
+          setUser(data);
+        } else {
+          console.warn("❌ Invalid user data:", data);
+          setUser(null);
+        }
+        setLoading(false);
       })
       .catch((err) => {
-        console.error("🚫 Fetch user failed:", err.message);
+        console.error("❌ Error fetching user:", err);
         setUser(null);
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
   }, []);
 
   // Show nothing until user fetch is complete
