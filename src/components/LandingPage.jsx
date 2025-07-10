@@ -26,7 +26,7 @@ function LandingPage() {
         {/* Logo */}
         <div className="mb-8 md:mb-12">
           <img
-            src="./public/516516672_17842053153537252_4367564328702039902_n.jpg" // <-- update with your actual logo path
+            src="/516516672_17842053153537252_4367564328702039902_n.jpg" // <-- update with your actual logo path
             alt="Twirl & Tie Logo"
             className="w-32 h-32 md:w-40 md:h-40 object-contain rounded-full border-4 border-amber-200 drop-shadow-lg"
           />
