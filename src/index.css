@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom animations */
 @keyframes fade-in-up {
   0% {
     opacity: 0;
@@ -60,10 +61,12 @@
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
+    #78350f,
+    rgba(255, 255, 255, 0.6),
+    #78350f
   );
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

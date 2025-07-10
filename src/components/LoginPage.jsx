@@ -1,10 +1,18 @@
-import React from 'react';
-import { Clock, Heart, Sparkles } from 'lucide-react';
+import React from "react";
+import { Clock, Sparkles, Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 
 const LoginPage = () => {
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
+  };
+
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden pt-16">
-      {/* Background decorative elements */}
+      {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-32 left-10 text-amber-200 opacity-30">
           <Sparkles className="w-8 h-8 animate-pulse" />
@@ -21,13 +29,12 @@ const LoginPage = () => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
-        {/* Main Content */}
         <div className="max-w-md w-full">
-          {/* Logo */}
+          {/* Logo & Heading */}
           <div className="text-center mb-8">
-            <img 
-              src="/516516672_17842053153537252_4367564328702039902_n.jpg" 
-              alt="Twirl & Tie Logo" 
+            <img
+              src="/516516672_17842053153537252_4367564328702039902_n.jpg"
+              alt="Twirl & Tie Logo"
               className="w-24 h-24 object-contain mx-auto mb-4 drop-shadow-lg"
             />
             <h1 className="text-3xl font-light text-amber-900 mb-2 tracking-wide">
@@ -38,49 +45,22 @@ const LoginPage = () => {
             </p>
           </div>
 
-          {/* Coming Soon Card */}
-          <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 border border-white/30 shadow-lg text-center">
-            <div className="w-16 h-16 bg-amber-200 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Clock className="w-8 h-8 text-amber-800" />
-            </div>
-            
-            <h2 className="text-2xl font-light text-amber-900 mb-4">
-              Login Feature Coming Soon
+          {/* Login with Google */}
+          <div className="bg-white/30 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-lg text-center">
+            <h2 className="text-xl font-light text-amber-900 mb-4">
+              Login with Google
             </h2>
-            
-            <p className="text-amber-800 mb-6 leading-relaxed">
-              We're crafting a beautiful and secure login experience for our customers. 
-              This feature will be available when we officially launch.
-            </p>
-
-            <div className="space-y-3 text-sm text-amber-700">
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
-                <span>Secure account creation</span>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
-                <span>Order history & tracking</span>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
-                <span>Personalized recommendations</span>
-              </div>
-              <div className="flex items-center justify-center gap-2">
-                <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
-                <span>Exclusive member benefits</span>
-              </div>
-            </div>
+            <button
+              onClick={handleGoogleLogin}
+              className="bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-700 hover:to-orange-600 text-white font-semibold px-6 py-3 rounded-full shadow-md transition-all duration-300 flex items-center justify-center gap-3"
+            >
+              <img src="https://img.icons8.com/color/16/google-logo.png" alt="Google" />
+              Sign in with Google
+            </button>
           </div>
 
-          {/* Additional Info */}
-          <div className="mt-8 text-center">
-            <p className="text-amber-700 text-sm">
-              Want to be notified when login is available?
-            </p>
-            <p className="text-amber-800 text-sm mt-1">
-              Sign up for our launch notifications on the home page!
-            </p>
+          <div className="mt-8 text-center text-sm text-amber-800">
+            You’ll be redirected to Google for secure authentication.
           </div>
         </div>
       </div>
