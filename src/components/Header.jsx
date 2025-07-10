@@ -15,7 +15,7 @@ const Header = ({ user }) => {
           {/* Left Section (Logo) */}
           <Link to="/" className="flex items-center gap-2">
             <img
-              src="public/516516672_17842053153537252_4367564328702039902_n.jpg"
+              src="516516672_17842053153537252_4367564328702039902_n.jpg"
               className="w-10 h-10 rounded-full"
               alt="Twirl & Tie Logo"
             />
