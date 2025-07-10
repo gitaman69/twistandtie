@@ -13,7 +13,7 @@ const Header = ({ user }) => {
     <header className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
       <div className="bg-amber-900/30 backdrop-blur-xl rounded-full px-6 py-3 shadow-2xl border border-amber-200/20 w-[80vw] max-w-[1200px]">
         <div className="flex items-center justify-between">
-          {/* Left Section (Logo) */}
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img
               src="516516672_17842053153537252_4367564328702039902_n.jpg"
@@ -23,9 +23,9 @@ const Header = ({ user }) => {
             <span className="text-amber-900 font-semibold">Twirl & Tie</span>
           </Link>
 
-          {/* Right Section (Buttons) */}
+          {/* Buttons */}
           <div className="flex items-center gap-3">
-            {/* Show Home button ONLY on products page */}
+            {/* ← Home button (on /products only) */}
             {location.pathname === "/products" && (
               <Link
                 to="/"
@@ -35,7 +35,17 @@ const Header = ({ user }) => {
               </Link>
             )}
 
-            {/* Auth Buttons */}
+            {/* → Products button (on / or /cart if user is logged in) */}
+            {user && (location.pathname === "/" || location.pathname === "/cart") && (
+              <Link
+                to="/products"
+                className="px-4 py-2 bg-amber-800 hover:bg-amber-900 text-white rounded-full font-medium transition-all duration-300 text-sm sm:text-base"
+              >
+                Products →
+              </Link>
+            )}
+
+            {/* Auth button */}
             {user ? (
               <button
                 onClick={handleLogout}
